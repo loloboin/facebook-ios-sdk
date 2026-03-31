@@ -20,6 +20,7 @@ final class IAPTransactionObserver: NSObject {
 
   private var isObservingStoreKit1Transactions = false
   private var isObservingStoreKit2Transactions = false
+  private var isProcessingNewTransactions = false
   private var anyTransactionListenerTask: Any?
   private var observationTime: UInt64 = IAPConstants.defaultIAPObservationTime
   private var releaseDate: Date
@@ -105,6 +106,21 @@ extension IAPTransactionObserver {
   func observeNewTransactions() async {
     guard isObservingStoreKit2Transactions else {
       return
+    }
+    var alreadyProcessing = false
+    synchronized(self) {
+      alreadyProcessing = isProcessingNewTransactions
+      if !alreadyProcessing {
+        isProcessingNewTransactions = true
+      }
+    }
+    guard !alreadyProcessing else {
+      return
+    }
+    defer {
+      synchronized(self) {
+        isProcessingNewTransactions = false
+      }
     }
     let newTransactions = await Transaction.getNewCandidateTransactions().sorted { lhs, rhs in
       lhs.iapTransaction.transaction.purchaseDate < rhs.iapTransaction.transaction.purchaseDate
@@ -231,6 +247,7 @@ extension IAPTransactionObserver {
   func reset() {
     stopObserving()
     isObservingStoreKit2Transactions = false
+    isProcessingNewTransactions = false
     anyTransactionListenerTask = nil
     observationTime = IAPConstants.defaultIAPObservationTime
     releaseDate = Self.getReleaseDate()
