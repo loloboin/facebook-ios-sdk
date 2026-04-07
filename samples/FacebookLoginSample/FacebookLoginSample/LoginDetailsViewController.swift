@@ -56,11 +56,7 @@ final class LoginDetailsViewController: UIViewController {
 
     private func setupButtonContainer() {
         buttonContainerView = UIView()
-        if #available(iOS 13.0, *) {
-            buttonContainerView.backgroundColor = .systemBackground
-        } else {
-            buttonContainerView.backgroundColor = .white
-        }
+        buttonContainerView.backgroundColor = .systemBackground
         buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(buttonContainerView)
 
@@ -108,7 +104,7 @@ final class LoginDetailsViewController: UIViewController {
             return
         }
 
-        let urlString = "https://graph.facebook.com/v17.0/me/permissions?access_token=\(accessToken)"
+        let urlString = "https://graph.facebook.com/v21.0/me/permissions?access_token=\(accessToken)"
         guard let url = URL(string: urlString) else {
             showAlert(title: "Error", message: "Invalid URL")
             return
@@ -145,7 +141,7 @@ final class LoginDetailsViewController: UIViewController {
             return
         }
 
-        let urlString = "https://graph.facebook.com/v17.0/me?fields=id,name,email&access_token=\(accessToken)"
+        let urlString = "https://graph.facebook.com/v21.0/me?fields=id,name,email&access_token=\(accessToken)"
         guard let url = URL(string: urlString) else {
             showAlert(title: "Error", message: "Invalid URL")
             return
