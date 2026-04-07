@@ -59,6 +59,10 @@ public final class TestSettings: NSObject, SettingsProtocol, SettingsLogging {
 
   public func setDataProcessingOptions(_ options: [String]?, country: Int32, state: Int32) {}
 
+  public func isLoggingBehaviorEnabled(_ loggingBehavior: LoggingBehavior) -> Bool {
+    loggingBehaviors.contains(loggingBehavior)
+  }
+
   public func reset() {
     appID = nil
     clientToken = nil

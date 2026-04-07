@@ -32,7 +32,7 @@ static NSMutableDictionary<NSNumber *, id> *g_startTimesWithTags = nil;
 - (instancetype)initWithLoggingBehavior:(NSString *)loggingBehavior
 {
   if ((self = [super init])) {
-    _active = [FBSDKSettings.sharedSettings.loggingBehaviors containsObject:loggingBehavior];
+    _active = [FBSDKSettings.sharedSettings isLoggingBehaviorEnabled:loggingBehavior];
     _loggingBehavior = loggingBehavior;
     if (_active) {
       _internalContents = [NSMutableString new];
@@ -127,7 +127,7 @@ static NSMutableDictionary<NSNumber *, id> *g_startTimesWithTags = nil;
 
 - (void)logEntry:(NSString *)logEntry
 {
-  if ([FBSDKSettings.sharedSettings.loggingBehaviors containsObject:_loggingBehavior]) {
+  if ([FBSDKSettings.sharedSettings isLoggingBehaviorEnabled:_loggingBehavior]) {
     [self appendString:logEntry];
     [self emitToNSLog];
   }
@@ -137,7 +137,7 @@ static NSMutableDictionary<NSNumber *, id> *g_startTimesWithTags = nil;
               timestampTag:(NSObject *)timestampTag
               formatString:(NSString *)formatString, ...
 {
-  if ([FBSDKSettings.sharedSettings.loggingBehaviors containsObject:loggingBehavior]) {
+  if ([FBSDKSettings.sharedSettings isLoggingBehaviorEnabled:loggingBehavior]) {
     va_list vaArguments;
     va_start(vaArguments, formatString);
     NSString *logString = [[NSString alloc] initWithFormat:formatString arguments:vaArguments];
@@ -171,7 +171,7 @@ static NSMutableDictionary<NSNumber *, id> *g_startTimesWithTags = nil;
 + (void)registerCurrentTime:(NSString *)loggingBehavior
                     withTag:(NSObject *)timestampTag
 {
-  if ([FBSDKSettings.sharedSettings.loggingBehaviors containsObject:loggingBehavior]) {
+  if ([FBSDKSettings.sharedSettings isLoggingBehaviorEnabled:loggingBehavior]) {
     @synchronized(self) {
       if (!g_startTimesWithTags) {
         g_startTimesWithTags = [NSMutableDictionary new];

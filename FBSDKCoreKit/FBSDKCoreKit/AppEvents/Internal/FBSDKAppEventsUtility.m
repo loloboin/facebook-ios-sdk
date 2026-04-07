@@ -317,7 +317,7 @@ static FBSDKAppEventsUtility *_shared;
 {
   NSString *behaviorToLog = FBSDKLoggingBehaviorAppEvents;
   if (allowLogAsDeveloperError) {
-    if ([self.settings.loggingBehaviors containsObject:FBSDKLoggingBehaviorDeveloperErrors]) {
+    if ([self.settings isLoggingBehaviorEnabled:FBSDKLoggingBehaviorDeveloperErrors]) {
       // Rather than log twice, prefer 'DeveloperErrors' if it's set over AppEvents.
       behaviorToLog = FBSDKLoggingBehaviorDeveloperErrors;
     }

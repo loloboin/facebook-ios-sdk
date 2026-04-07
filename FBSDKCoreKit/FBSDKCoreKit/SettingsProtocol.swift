@@ -119,4 +119,7 @@ public protocol SettingsProtocol {
      - state The code for the state.
    */
   func setDataProcessingOptions(_ options: [String]?, country: Int32, state: Int32)
+
+  /// Check if a particular logging behavior is enabled.
+  func isLoggingBehaviorEnabled(_ loggingBehavior: LoggingBehavior) -> Bool
 }

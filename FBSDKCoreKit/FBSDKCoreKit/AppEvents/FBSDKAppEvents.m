@@ -1472,7 +1472,7 @@ operationalParameters:nil];
     }
 
     NSString *loggingEntry = nil;
-    if ([self.settings.loggingBehaviors containsObject:FBSDKLoggingBehaviorAppEvents]) {
+    if ([self.settings isLoggingBehaviorEnabled:FBSDKLoggingBehaviorAppEvents]) {
       NSData *prettyJSONData = [FBSDKTypeUtility dataWithJSONObject:appEventsState.events
                                                             options:NSJSONWritingPrettyPrinted
                                                               error:NULL];

@@ -566,6 +566,14 @@ public final class Settings: NSObject, SettingsProtocol, SettingsLogging, _Clien
     loggingBehaviors.remove(loggingBehavior)
   }
 
+  /// Check if a particular logging behavior is enabled.
+  /// Performs the membership check entirely in Swift to avoid the
+  /// ObjC NSSet bridge path that is vulnerable to linker ICF bugs
+  /// with static XCFrameworks.
+  public func isLoggingBehaviorEnabled(_ loggingBehavior: LoggingBehavior) -> Bool {
+    loggingBehaviors.contains(loggingBehavior)
+  }
+
   /**
    Internal property exposed to facilitate transition to Swift.
    API Subject to change or removal without warning. Do not use.
