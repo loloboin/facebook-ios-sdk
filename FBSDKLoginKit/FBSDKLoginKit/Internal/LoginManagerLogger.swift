@@ -151,6 +151,10 @@ final class LoginManagerLogger {
     logEvent(.sessionAuthMethodEnd, result: resultString, error: error)
   }
 
+  // The timer's strong reference to `self` intentionally keeps this logger alive until it fires.
+  // This guarantees the heartbeat telemetry event is logged even if the session ends and the
+  // LoginManager releases its reference to this logger before the 5-second delay elapses.
+  // Do not "fix" this by using [weak self] — it would silently drop the heartbeat event.
   func postLoginHeartbeat() {
     Timer.scheduledTimer(
       timeInterval: 5.0,
