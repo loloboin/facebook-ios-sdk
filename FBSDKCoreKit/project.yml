@@ -159,6 +159,12 @@ targets:
       BUILD_LIBRARY_FOR_DISTRIBUTION: NO
     dependencies:
       - target: IAPTestsHostApp
+      - target: FBSDKCoreKit-Dynamic
+        link: false
+        embed: false
+      - target: TestTools/TestTools
+        link: false
+        embed: false
 
 schemes:
   FBSDKCoreKit-Static:
