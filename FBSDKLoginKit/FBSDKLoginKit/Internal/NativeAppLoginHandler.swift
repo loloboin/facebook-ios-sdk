@@ -36,13 +36,17 @@ internal final class NativeAppLoginHandler {
       return false
     }
 
-    // Check if app switch is enabled by the app (opt-in model)
+    // Check if app switch is enabled by the app (opt-out model)
     guard configuration.appSwitch == .enabled else {
       return false
     }
 
-    // Only attempt native app login for enabled tracking
-    // Limited tracking users must use browser for privacy compliance
+    // Check if FAS is enabled via server-side GK (killswitch for classic login FAS)
+    guard _FeatureManager.shared.isEnabled(.loginFastAppSwitch) else {
+      return false
+    }
+
+    // Limited tracking users must use browser - LL FAS not yet enabled
     guard configuration.tracking == .enabled else {
       return false
     }

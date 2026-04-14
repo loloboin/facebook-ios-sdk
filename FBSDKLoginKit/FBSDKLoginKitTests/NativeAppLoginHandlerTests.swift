@@ -56,6 +56,8 @@ final class NativeAppLoginHandlerTests: XCTestCase {
     internalUtility = nil
     settings = nil
     urlOpener = nil
+    _FeatureManager.configuredDependencies = nil
+    TestGateKeeperManager.reset()
 
     super.tearDown()
   }
@@ -119,12 +121,37 @@ final class NativeAppLoginHandlerTests: XCTestCase {
 
   func testShouldNotAttemptNativeAppLoginWithLimitedTracking() {
     internalUtility.isFacebookAppInstalled = true
+    TestGateKeeperManager.gateKeepers["FBSDKFeatureFBLoginFAS"] = true
+    _FeatureManager.configuredDependencies = _FeatureManager.TypeDependencies(
+      gateKeeperManager: TestGateKeeperManager.self,
+      settings: settings,
+      store: UserDefaults.standard
+    )
+
     configuration = createConfiguration(tracking: .limited, appSwitch: .enabled)
     handler = createHandler(configuration: configuration)
 
     XCTAssertFalse(
       handler.shouldAttemptNativeAppLogin(),
-      "Should not attempt native app login with limited tracking for privacy compliance"
+      "Should not attempt native app login with limited tracking even when GK is enabled"
+    )
+  }
+
+  func testShouldNotAttemptNativeAppLoginWhenFASGKDisabled() {
+    internalUtility.isFacebookAppInstalled = true
+    TestGateKeeperManager.gateKeepers["FBSDKFeatureFBLoginFAS"] = false
+    _FeatureManager.configuredDependencies = _FeatureManager.TypeDependencies(
+      gateKeeperManager: TestGateKeeperManager.self,
+      settings: settings,
+      store: UserDefaults.standard
+    )
+
+    configuration = createConfiguration(tracking: .enabled, appSwitch: .enabled)
+    handler = createHandler(configuration: configuration)
+
+    XCTAssertFalse(
+      handler.shouldAttemptNativeAppLogin(),
+      "Should not attempt native app login when FAS GK is disabled"
     )
   }
 
