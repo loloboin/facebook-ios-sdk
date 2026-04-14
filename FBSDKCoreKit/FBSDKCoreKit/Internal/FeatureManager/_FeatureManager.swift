@@ -122,7 +122,8 @@ public final class _FeatureManager: NSObject, FeatureChecking, _FeatureDisabling
       .filterRedactedEvents,
       .filterSensitiveParams,
       .iapLoggingSK2,
-      .iosManualImplicitPurchaseDedupe:
+      .iosManualImplicitPurchaseDedupe,
+      .loginFastAppSwitch:
       return false
     case .none, .login, .share, .core, .appEvents, .codelessEvents, .gamingServices:
       return true
@@ -175,6 +176,7 @@ public final class _FeatureManager: NSObject, FeatureChecking, _FeatureDisabling
     case .aemAutoSetupProxy: featureName = "AppAemAutoSetUpProxy"
     case .appEventsCloudbridge: featureName = "AppEventsCloudbridge"
     case .login: featureName = "LoginKit"
+    case .loginFastAppSwitch: featureName = "FBLoginFAS"
     case .share: featureName = "ShareKit"
     case .gamingServices: featureName = "GamingServicesKit"
     case .protectedMode: featureName = "ProtectedMode"

@@ -76,6 +76,8 @@ typedef NS_ENUM(NSUInteger, FBSDKFeature) {
   // Features in LoginKit
   /// Essential of LoginKit
   FBSDKFeatureLogin = 0x02000000,
+  /// Fast App Switch login flow
+  FBSDKFeatureLoginFastAppSwitch = 0x02010000,
 
   // Features in ShareKit
   /// Essential of ShareKit
