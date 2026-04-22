@@ -691,6 +691,28 @@ public final class Settings: NSObject, SettingsProtocol, SettingsLogging, _Clien
   /// Controls whether to show domain errors.
   public var isDomainErrorEnabled = true
 
+  /**
+   Controls whether to add the user to the messaging customer base for WhatsApp.
+
+   The default value is `nil` (field not sent in the payload).
+   Set to `true` or `false` to explicitly include the field in the payload.
+   This value is stored on the device and persists across app launches.
+   */
+  public var addToMessagingCustomerBaseForWhatsApp: NSNumber? {
+    get {
+      self.dataStore?.fb_object(
+        forKey: PersistenceKey.addToMessagingCustomerBaseForWhatsApp.rawValue
+      ) as? NSNumber
+    }
+    set {
+      if let newValue {
+        self.dataStore?.fb_setObject(newValue, forKey: PersistenceKey.addToMessagingCustomerBaseForWhatsApp.rawValue)
+      } else {
+        self.dataStore?.fb_removeObject(forKey: PersistenceKey.addToMessagingCustomerBaseForWhatsApp.rawValue)
+      }
+    }
+  }
+
   // swiftlint:enable let_var_whitespace
 
   #if DEBUG

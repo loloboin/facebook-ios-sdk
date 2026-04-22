@@ -46,6 +46,7 @@ public final class TestSettings: NSObject, SettingsProtocol, SettingsLogging {
   public static var loggingBehaviors = Set<LoggingBehavior>()
   public var persistableDataProcessingOptions: [String: Any]?
   public var isDomainErrorEnabled = true
+  public var addToMessagingCustomerBaseForWhatsApp: NSNumber?
 
   public func logIfSDKSettingsChanged() {
     logIfSDKSettingsChangedCallCount += 1

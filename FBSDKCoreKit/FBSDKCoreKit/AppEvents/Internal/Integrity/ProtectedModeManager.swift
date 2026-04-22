@@ -129,6 +129,7 @@ public final class ProtectedModeManager: NSObject, _AppEventsParameterProcessing
     "aggregate_id",
     "anonymous_id",
     "campaign_ids",
+    "add_to_messaging_customer_base_for_whatsapp",
     "fb_post_attachment",
     "receipt_data",
     "ad_type",

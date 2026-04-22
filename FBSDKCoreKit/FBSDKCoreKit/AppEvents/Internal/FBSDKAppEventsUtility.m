@@ -97,6 +97,10 @@ static FBSDKAppEventsUtility *_shared;
 
   [FBSDKTypeUtility dictionary:parameters setObject:@(!self.settings.isEventDataUsageLimited).stringValue forKey:@"application_tracking_enabled"];
   [FBSDKTypeUtility dictionary:parameters setObject:@(self.settings.isAdvertiserIDCollectionEnabled).stringValue forKey:@"advertiser_id_collection_enabled"];
+  NSNumber *addToMessagingCustomerBaseForWhatsApp = FBSDKSettings.sharedSettings.addToMessagingCustomerBaseForWhatsApp;
+  if (addToMessagingCustomerBaseForWhatsApp != nil) {
+    [FBSDKTypeUtility dictionary:parameters setObject:addToMessagingCustomerBaseForWhatsApp.stringValue forKey:@"add_to_messaging_customer_base_for_whatsapp"];
+  }
 
   if (userID) {
     [FBSDKTypeUtility dictionary:parameters setObject:userID forKey:@"app_user_id"];
